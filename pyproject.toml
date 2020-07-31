@@ -35,7 +35,7 @@ build-backend = "poetry.masonry.api"
 legacy_tox_ini = """
 [tox]
 isolated_build = True
-envlist = py37, py38, py3.9
+envlist = py37, py38, py39
 
 [testenv]
 whitelist_externals = poetry
