@@ -5,8 +5,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from pprint import pprint
-from typing import Generator
+from typing import Generator, List
 from zipfile import ZipFile
 
 import requests
@@ -21,6 +20,13 @@ class GrammalecteMessage:
     def __str__(self):
         return f"Ligne {self.line} [{self.start}:{self.end}]"
 
+    def __eq__(self, other: "GrammalecteMessage"):
+        # TODO to sort, but misleading equality usage
+        return (self.line, self.start, self.end) == (other.line, other.start, other.end)
+
+    def __lt__(self, other: "GrammalecteMessage"):
+        return (self.line, self.start, self.end) < (other.line, other.start, other.end)
+
 
 class GrammalecteSpellingMessage(GrammalecteMessage):
     def __init__(self, line: int, start: int, end: int, word: str) -> None:
@@ -31,7 +37,7 @@ class GrammalecteSpellingMessage(GrammalecteMessage):
         return super().__str__() + f" Mot inconnu : {self.word}"
 
     @staticmethod
-    def from_dict(line: int, grammalecte_dict: dict) -> GrammalecteMessage:
+    def from_dict(line: int, grammalecte_dict: dict) -> "GrammalecteSpellingMessage":
         return GrammalecteSpellingMessage(
             line,
             int(grammalecte_dict["nStart"]),
@@ -40,12 +46,53 @@ class GrammalecteSpellingMessage(GrammalecteMessage):
         )
 
 
+class GrammalecteGrammarMessage(GrammalecteMessage):
+    def __init__(
+        self,
+        line: int,
+        start: int,
+        end: int,
+        url: str,
+        color: List[int],
+        suggestions: List[str],
+        message: str,
+        rule: str,
+        type: str,
+    ) -> None:
+        super().__init__(line, start, end)
+        self.url = url
+        self.color = color
+        self.suggestions = suggestions
+        self.message = message
+        self.rule = rule
+        self.type = type
+
+    def __str__(self):
+        ret = super().__str__() + f" [{self.rule}] {self.message}"
+        if self.suggestions:
+            ret += f" (Suggestions : {', '.join(self.suggestions)})"
+        return ret
+
+    @staticmethod
+    def from_dict(line: int, grammalecte_dict: dict) -> "GrammalecteGrammarMessage":
+        return GrammalecteGrammarMessage(
+            line,
+            int(grammalecte_dict["nStart"]),
+            int(grammalecte_dict["nEnd"]),
+            grammalecte_dict["URL"],
+            grammalecte_dict["aColor"],
+            grammalecte_dict["aSuggestions"],
+            grammalecte_dict["sMessage"],
+            grammalecte_dict["sRuleId"],
+            grammalecte_dict["sType"],
+        )
+
+
 def grammalecte(filename: str) -> Generator[GrammalecteMessage, None, None]:
     """Run grammalecte on a file given its path, generate messages."""
     stdout = "[]"
     # TODO check existence of a file
     # TODO use text instead of filename
-    print("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
     try:
         result = _run_grammalecte(filename)
         stdout = result.stdout
@@ -56,13 +103,15 @@ def grammalecte(filename: str) -> Generator[GrammalecteMessage, None, None]:
             stdout = result.stdout
 
     warnings = json.loads(stdout)
-    pprint(warnings)
     for warning in warnings["data"]:
-        print("paragraph")
         lineno = int(warning["iParagraph"])
+        messages = []
+        for error in warning["lGrammarErrors"]:
+            messages.append(GrammalecteGrammarMessage.from_dict(lineno, error))
         for error in warning["lSpellingErrors"]:
-            print("error")
-            yield GrammalecteSpellingMessage.from_dict(lineno, error)
+            messages.append(GrammalecteSpellingMessage.from_dict(lineno, error))
+        for message in sorted(messages):
+            yield message
 
 
 def _run_grammalecte(filename: str) -> subprocess.CompletedProcess:
