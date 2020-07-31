@@ -8,8 +8,12 @@ Pour être précis, ce projet n’est pas Grammalecte, mais un « wrapper » p
 
 ## Installation
 
+Vous devez utiliser un Python en version supérieure ou égale à 3.7.
+
+L’utilisation d’un environnement virtuel est fortement recommandé.
+
 ```sh
-python -m pip install pygrammalecte
+python3 -m pip install pygrammalecte
 ```
 
 ## Utilisation
