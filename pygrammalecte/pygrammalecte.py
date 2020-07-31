@@ -132,23 +132,24 @@ def _run_grammalecte(filename: str) -> subprocess.CompletedProcess:
 
 def _install_grammalecte():
     """Install grammalecte CLI."""
+    version = "1.5.0"
     tmpdirname = tempfile.mkdtemp(prefix="grammalecte_")
     tmpdirname = Path(tmpdirname)
     tmpdirname.mkdir(exist_ok=True)
     download_request = requests.get(
-        "https://grammalecte.net/grammalecte/zip/Grammalecte-fr-v1.5.0.zip"
+        f"https://grammalecte.net/grammalecte/zip/Grammalecte-fr-v{version}.zip"
     )
     download_request.raise_for_status()
-    zip_file = tmpdirname / "Grammalecte-fr-v1.5.0.zip"
+    zip_file = tmpdirname / f"Grammalecte-fr-v{version}.zip"
     zip_file.write_bytes(download_request.content)
     with ZipFile(zip_file, "r") as zip_obj:
-        zip_obj.extractall(tmpdirname / "Grammalecte-fr-v1.5.0")
+        zip_obj.extractall(tmpdirname / f"Grammalecte-fr-v{version}")
     subprocess.check_call(
         [
             sys.executable,
             "-m",
             "pip",
             "install",
-            str(tmpdirname / "Grammalecte-fr-v1.5.0"),
+            str(tmpdirname / f"Grammalecte-fr-v{version}"),
         ]
     )
