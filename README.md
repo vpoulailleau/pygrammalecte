@@ -50,9 +50,9 @@ for message in grammalecte_file(filepath):
 
 ### Messages générés
 
-Les fonctions `grammalecte_file` et `grammalecte_text` sont des générateurs, vous pouvez donc les utiliser dans une boucle `for`.
+Les fonctions `grammalecte_file` et `grammalecte_text` sont des générateurs, vous pouvez donc les utiliser dans une boucle `for`. Elles génèrent des `GrammalecteMessage`.
 
-Deux types de messages existent :
+Deux types de `GrammalecteMessage` existent :
 
 - `GrammalecteSpellingMessage` qui a comme attributs :
   - `line` : numéro de la ligne dans le texte vérifié
