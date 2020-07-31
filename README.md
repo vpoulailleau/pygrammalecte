@@ -35,7 +35,7 @@ for message in grammalecte_text(texte_bidon):
 
 ### Vérification d’un fichier
 
-Vous devez fournir le chemin du fichier en `str` ou en `pathlib.Path`.
+Vous devez fournir le chemin du fichier en `str` ou en `pathlib.Path`. Le fichier doit être un fichier texte brut (pas un fichier Word ou OpenDocument par exemple).
 
 ```python
 from pathlib import Path
