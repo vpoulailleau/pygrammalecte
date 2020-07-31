@@ -67,6 +67,13 @@ Deux types de messages existent :
   - `rule` : identifiant de la règle violée
   - `type` : type de la règle (`"conj"`…)
 
+## Changelog
+
+### Version v0.1.0
+
+- Première version !
+- Utilisation de Grammalecte v1.11.0
+
 ## English version
 
 This is a wrapper for the french grammatical checker called Grammalecte.
