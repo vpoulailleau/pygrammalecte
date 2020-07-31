@@ -5,7 +5,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Generator, List
+from typing import Generator, List, Union
 from zipfile import ZipFile
 
 import requests
@@ -88,11 +88,21 @@ class GrammalecteGrammarMessage(GrammalecteMessage):
         )
 
 
-def grammalecte(filename: str) -> Generator[GrammalecteMessage, None, None]:
+def grammalecte_text(text: str) -> Generator[GrammalecteMessage, None, None]:
+    with tempfile.TemporaryDirectory() as tmpdirname:
+        tmpfile = Path(tmpdirname) / "file.txt"
+        with open(tmpfile, "w", encoding="utf-8") as f:
+            f.write(text)
+        yield from grammalecte_file(tmpfile)
+
+
+def grammalecte_file(
+    filename: Union[str, Path]
+) -> Generator[GrammalecteMessage, None, None]:
     """Run grammalecte on a file given its path, generate messages."""
     stdout = "[]"
     # TODO check existence of a file
-    # TODO use text instead of filename
+    filename = str(filename)
     try:
         result = _run_grammalecte(filename)
         stdout = result.stdout
@@ -132,7 +142,7 @@ def _run_grammalecte(filename: str) -> subprocess.CompletedProcess:
 
 def _install_grammalecte():
     """Install grammalecte CLI."""
-    version = "1.5.0"
+    version = "1.11.0"
     tmpdirname = tempfile.mkdtemp(prefix="grammalecte_")
     tmpdirname = Path(tmpdirname)
     tmpdirname.mkdir(exist_ok=True)
