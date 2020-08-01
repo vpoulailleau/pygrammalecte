@@ -38,6 +38,7 @@ class GrammalecteSpellingMessage(GrammalecteMessage):
 
     @staticmethod
     def from_dict(line: int, grammalecte_dict: dict) -> "GrammalecteSpellingMessage":
+        """Instanciate GrammalecteSpellingMessage from Grammalecte result."""
         return GrammalecteSpellingMessage(
             line=line,
             start=int(grammalecte_dict["nStart"]),
@@ -63,6 +64,7 @@ class GrammalecteGrammarMessage(GrammalecteMessage):
 
     @staticmethod
     def from_dict(line: int, grammalecte_dict: dict) -> "GrammalecteGrammarMessage":
+        """Instanciate GrammalecteGrammarMessage from Grammalecte result."""
         return GrammalecteGrammarMessage(
             line=line,
             start=int(grammalecte_dict["nStart"]),
@@ -77,6 +79,7 @@ class GrammalecteGrammarMessage(GrammalecteMessage):
 
 
 def grammalecte_text(text: str) -> Generator[GrammalecteMessage, None, None]:
+    """Run grammalecte on a string, generate messages."""
     with tempfile.TemporaryDirectory() as tmpdirname:
         tmpfile = Path(tmpdirname) / "file.txt"
         with open(tmpfile, "w", encoding="utf-8") as f:
