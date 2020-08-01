@@ -39,10 +39,10 @@ class GrammalecteSpellingMessage(GrammalecteMessage):
     @staticmethod
     def from_dict(line: int, grammalecte_dict: dict) -> "GrammalecteSpellingMessage":
         return GrammalecteSpellingMessage(
-            line,
-            int(grammalecte_dict["nStart"]),
-            int(grammalecte_dict["nEnd"]),
-            grammalecte_dict["sValue"],
+            line=line,
+            start=int(grammalecte_dict["nStart"]),
+            end=int(grammalecte_dict["nEnd"]),
+            word=grammalecte_dict["sValue"],
         )
 
 
@@ -76,15 +76,15 @@ class GrammalecteGrammarMessage(GrammalecteMessage):
     @staticmethod
     def from_dict(line: int, grammalecte_dict: dict) -> "GrammalecteGrammarMessage":
         return GrammalecteGrammarMessage(
-            line,
-            int(grammalecte_dict["nStart"]),
-            int(grammalecte_dict["nEnd"]),
-            grammalecte_dict["URL"],
-            grammalecte_dict["aColor"],
-            grammalecte_dict["aSuggestions"],
-            grammalecte_dict["sMessage"],
-            grammalecte_dict["sRuleId"],
-            grammalecte_dict["sType"],
+            line=line,
+            start=int(grammalecte_dict["nStart"]),
+            end=int(grammalecte_dict["nEnd"]),
+            url=grammalecte_dict["URL"],
+            color=grammalecte_dict["aColor"],
+            suggestions=grammalecte_dict["aSuggestions"],
+            message=grammalecte_dict["sMessage"],
+            rule=grammalecte_dict["sRuleId"],
+            type=grammalecte_dict["sType"],
         )
 
 
