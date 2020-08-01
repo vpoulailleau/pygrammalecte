@@ -2,7 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/pygrammalecte.svg)](https://pypi.python.org/pypi/pygrammalecte)
 [![PyPI](https://img.shields.io/pypi/l/pygrammalecte.svg)](https://github.com/vpoulailleau/pygrammalecte/blob/master/LICENSE)
-[![Travis](https://img.shields.io/travis/vpoulailleau/pygrammalecte.svg)](https://travis-ci.org/vpoulailleau/pygrammalecte)
+[![Travis](https://img.shields.io/travis/vpoulailleau/pygrammalecte.svg)](https://travis-ci.com/vpoulailleau/pygrammalecte)
 [![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![Downloads](https://pepy.tech/badge/pygrammalecte)](https://pepy.tech/project/pygrammalecte)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/44347ade656fa1e652ae/test_coverage)](https://codeclimate.com/github/vpoulailleau/pygrammalecte/test_coverage)
