@@ -4,18 +4,19 @@ import json
 import subprocess
 import sys
 import tempfile
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Generator, List, Union
 from zipfile import ZipFile
 
 import requests
 
-# TODO dataclass
+
+@dataclass
 class GrammalecteMessage:
-    def __init__(self, line: int, start: int, end: int) -> None:
-        self.line = line
-        self.start = start
-        self.end = end
+    line: int
+    start: int
+    end: int
 
     def __str__(self):
         return f"Ligne {self.line} [{self.start}:{self.end}]"
@@ -28,10 +29,9 @@ class GrammalecteMessage:
         return (self.line, self.start, self.end) < (other.line, other.start, other.end)
 
 
+@dataclass
 class GrammalecteSpellingMessage(GrammalecteMessage):
-    def __init__(self, line: int, start: int, end: int, word: str) -> None:
-        super().__init__(line, start, end)
-        self.word = word
+    word: str
 
     def __str__(self):
         return super().__str__() + f" Mot inconnu : {self.word}"
@@ -46,26 +46,14 @@ class GrammalecteSpellingMessage(GrammalecteMessage):
         )
 
 
+@dataclass
 class GrammalecteGrammarMessage(GrammalecteMessage):
-    def __init__(
-        self,
-        line: int,
-        start: int,
-        end: int,
-        url: str,
-        color: List[int],
-        suggestions: List[str],
-        message: str,
-        rule: str,
-        type: str,
-    ) -> None:
-        super().__init__(line, start, end)
-        self.url = url
-        self.color = color
-        self.suggestions = suggestions
-        self.message = message
-        self.rule = rule
-        self.type = type
+    url: str
+    color: List[int]
+    suggestions: List[str]
+    message: str
+    rule: str
+    type: str
 
     def __str__(self):
         ret = super().__str__() + f" [{self.rule}] {self.message}"
@@ -124,12 +112,13 @@ def grammalecte_file(
             yield message
 
 
-def _run_grammalecte(filename: str) -> subprocess.CompletedProcess:
+def _run_grammalecte(filepath: str) -> subprocess.CompletedProcess:
+    """Run Grammalecte on a file."""
     return subprocess.run(
         [
             "grammalecte-cli.py",
             "-f",
-            filename,
+            filepath,
             "-off",
             "apos",
             "--json",
