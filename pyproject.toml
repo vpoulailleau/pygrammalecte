@@ -14,7 +14,7 @@ readme = "README.md"
 repository = "https://github.com/vpoulailleau/pygrammalecte"
 homepage = "https://github.com/vpoulailleau/pygrammalecte"
 documentation = "https://github.com/vpoulailleau/pygrammalecte"
-keywords = ["grammalecte", "linter", "grammatical", "french"]
+keywords = ["grammalecte", "linter", "grammatical", "grammar-checker", "french"]
 license = "BSD-3-Clause"
 include = ["pygrammalecte/**/*.py"]
 
