@@ -1,16 +1,15 @@
 env:
   global:
-    - CC_TEST_REPORTER_ID=810f1d89cc17415a9d23357c8e123290516e177ae3f71f1b5b996c846d52d22d
+    - CC_TEST_REPORTER_ID=0a24efe2549460c5f019ef26c37a59f861ff80270742cfc809ba98141796bc3c
 language: python
 matrix:
   include:
-    - python: 3.7
-      dist: xenial
-      sudo: true
     - python: 3.8
       dist: bionic
       sudo: true
-    - python: 3.6
+    - python: 3.7
+      dist: xenial
+      sudo: true
 
 install:
   - pip install -U tox-travis
