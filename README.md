@@ -1,5 +1,14 @@
 # pygrammalecte
 
+[![PyPI](https://img.shields.io/pypi/v/pygrammalecte.svg)](https://pypi.python.org/pypi/pygrammalecte)
+[![PyPI](https://img.shields.io/pypi/l/pygrammalecte.svg)](https://github.com/vpoulailleau/pygrammalecte/blob/master/LICENSE)
+[![Travis](https://img.shields.io/travis/vpoulailleau/pygrammalecte.svg)](https://travis-ci.org/vpoulailleau/pygrammalecte)
+[![ReadTheDocs](https://readthedocs.org/projects/pygrammalecte/badge/?version=latest)](https://pygrammalecte.readthedocs.io/en/latest/?badge=latest)
+[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![Downloads](https://pepy.tech/badge/pygrammalecte)](https://pepy.tech/project/pygrammalecte)
+[![Coverage Status](https://coveralls.io/repos/github/vpoulailleau/pygrammalecte/badge.svg?branch=master)](https://coveralls.io/github/vpoulailleau/pygrammalecte?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/4ad8f1bef2c011e8a5ac/maintainability)](https://codeclimate.com/github/vpoulailleau/pygrammalecte/maintainability)
+
 (english version at the bottom of this document)
 
 Grammalecte, le correcteur grammatical en Python.
@@ -55,6 +64,7 @@ Les fonctions `grammalecte_file` et `grammalecte_text` sont des générateurs, v
 Deux types de `GrammalecteMessage` existent :
 
 - `GrammalecteSpellingMessage` qui a comme attributs :
+
   - `line` : numéro de la ligne dans le texte vérifié
   - `start` : numéro du caractère de début de l’erreur dans la ligne
   - `end` : numéro du caractère de fin de l’erreur dans la ligne
