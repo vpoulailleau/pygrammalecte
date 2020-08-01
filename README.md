@@ -5,8 +5,8 @@
 [![Travis](https://img.shields.io/travis/vpoulailleau/pygrammalecte.svg)](https://travis-ci.org/vpoulailleau/pygrammalecte)
 [![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![Downloads](https://pepy.tech/badge/pygrammalecte)](https://pepy.tech/project/pygrammalecte)
-[![Coverage Status](https://coveralls.io/repos/github/vpoulailleau/pygrammalecte/badge.svg?branch=master)](https://coveralls.io/github/vpoulailleau/pygrammalecte?branch=master)
-[![Maintainability](https://api.codeclimate.com/v1/badges/4ad8f1bef2c011e8a5ac/maintainability)](https://codeclimate.com/github/vpoulailleau/pygrammalecte/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/44347ade656fa1e652ae/test_coverage)](https://codeclimate.com/github/vpoulailleau/pygrammalecte/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/44347ade656fa1e652ae/maintainability)](https://codeclimate.com/github/vpoulailleau/pygrammalecte/maintainability)
 
 (english version at the bottom of this document)
 
