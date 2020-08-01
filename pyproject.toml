@@ -26,10 +26,7 @@ requests = "^2.20.0"
 pytest = "^6.0.0"
 pytest-cov = "^2.8.0"
 tox = "^3.14.0"
-
-[build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+tox-travis = "^0.12"
 
 [tool.tox]
 legacy_tox_ini = """
@@ -44,3 +41,8 @@ commands =
     poetry install -v
     poetry run pytest -s -vv --cov=pygrammalecte
 """
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+

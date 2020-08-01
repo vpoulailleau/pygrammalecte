@@ -16,8 +16,6 @@ before_install:
 
 install:
   - poetry install
-  - pip install -U tox-travis
-  - pip install coverage
 
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
