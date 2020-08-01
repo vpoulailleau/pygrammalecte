@@ -32,7 +32,7 @@ tox-travis = "^0.12"
 legacy_tox_ini = """
 [tox]
 isolated_build = True
-envlist = py37, py38, py39
+envlist = py37, py38
 
 [testenv]
 whitelist_externals = poetry
