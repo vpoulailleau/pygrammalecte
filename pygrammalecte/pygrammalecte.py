@@ -22,7 +22,7 @@ class GrammalecteMessage:
         return f"Ligne {self.line} [{self.start}:{self.end}]"
 
     def __eq__(self, other: "GrammalecteMessage"):
-        # TODO to sort, but misleading equality usage
+        # to be sortable, but misleading equality usage
         return (self.line, self.start, self.end) == (other.line, other.start, other.end)
 
     def __lt__(self, other: "GrammalecteMessage"):
