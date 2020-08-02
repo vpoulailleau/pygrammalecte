@@ -102,8 +102,13 @@ def grammalecte_file(
             _install_grammalecte()
             result = _run_grammalecte(filename)
             stdout = result.stdout
+    yield from _convert_to_messages(stdout)
 
-    warnings = json.loads(stdout)
+
+def _convert_to_messages(
+    grammalecte_json: str
+) -> Generator[GrammalecteMessage, None, None]:
+    warnings = json.loads(grammalecte_json)
     for warning in warnings["data"]:
         lineno = int(warning["iParagraph"])
         messages = []
