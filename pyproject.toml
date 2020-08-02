@@ -35,7 +35,10 @@ isolated_build = True
 envlist = py37, py38
 
 [testenv]
-whitelist_externals = poetry
+allowlist_externals =
+    poetry
+    echo
+    sed
 changedir = {toxinidir}/tests
 commands =
     poetry install -v
@@ -43,9 +46,9 @@ commands =
     poetry run coverage xml
     echo 'fix travis bug'
     sed --in-place -e 's#//home#/home#g' coverage.xml
-    echo 'fix codeclimate bug'
-    sed --in-place -e 's#/home.*pygrammalecte/##g' coverage.xml
 """
+#echo 'fix codeclimate bug'
+#sed --in-place -e 's#/home.*pygrammalecte/##g' coverage.xml
 
 [build-system]
 requires = ["poetry>=0.12"]
