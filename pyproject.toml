@@ -48,7 +48,7 @@ commands =
     echo 'fix travis bug'
     sed --in-place -e 's#//home#/home#g' coverage.xml
     echo 'fix codeclimate bug, use relative path'
-    sed --in-place -e 's#/home.*vpoulailleau/pygrammalecte/#../#g' coverage.xml
+    sed --in-place -e 's#/home.*vpoulailleau/pygrammalecte/##g' coverage.xml
     cat coverage.xml
 """
 #echo 'fix codeclimate bug'
