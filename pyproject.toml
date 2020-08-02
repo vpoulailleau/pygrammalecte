@@ -41,6 +41,8 @@ commands =
     poetry install -v
     poetry run pytest -s -vv --cov=pygrammalecte
     poetry run coverage xml
+    echo "fix travis bug"
+    sed --in-place -e "s#//home#/home#g" coverage.xml
 """
 
 [build-system]
