@@ -27,4 +27,4 @@ after_script:
   - echo "$TRAVIS_PULL_REQUEST"
   - echo "$TRAVIS_PYTHON_VERSION"
   - find . -name ".coverage"
-  - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_PYTHON_VERSION" == "3.7" ]]; then ../cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT tests/coverage.xml; fi
+  - if [[ "$TRAVIS_PULL_REQUEST" == "false" && "$TRAVIS_PYTHON_VERSION" == "3.7" ]]; then cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT tests/coverage.xml; fi
