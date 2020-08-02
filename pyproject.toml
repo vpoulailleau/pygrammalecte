@@ -43,6 +43,8 @@ commands =
     poetry run coverage xml
     echo 'fix travis bug'
     sed --in-place -e 's#//home#/home#g' coverage.xml
+    echo 'fix codeclimate bug'
+    sed --in-place -e 's#/home.*pygrammalecte/##g' coverage.xml
 """
 
 [build-system]
