@@ -14,6 +14,8 @@ import requests
 
 @dataclass
 class GrammalecteMessage:
+    """Base class for Grammalecte messages."""
+
     line: int
     start: int
     end: int
@@ -31,6 +33,8 @@ class GrammalecteMessage:
 
 @dataclass
 class GrammalecteSpellingMessage(GrammalecteMessage):
+    """Spelling error message."""
+
     word: str
 
     def __str__(self):
@@ -49,6 +53,8 @@ class GrammalecteSpellingMessage(GrammalecteMessage):
 
 @dataclass
 class GrammalecteGrammarMessage(GrammalecteMessage):
+    """Grammar error message."""
+
     url: str
     color: List[int]
     suggestions: List[str]
