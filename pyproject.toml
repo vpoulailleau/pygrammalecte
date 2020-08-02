@@ -39,6 +39,7 @@ allowlist_externals =
     poetry
     echo
     sed
+    cat
 changedir = {toxinidir}/tests
 commands =
     poetry install -v
@@ -46,6 +47,7 @@ commands =
     poetry run coverage xml
     echo 'fix travis bug'
     sed --in-place -e 's#//home#/home#g' coverage.xml
+    cat coverage.xml
 """
 #echo 'fix codeclimate bug'
 #sed --in-place -e 's#/home.*pygrammalecte/##g' coverage.xml
