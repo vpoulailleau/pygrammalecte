@@ -82,6 +82,11 @@ Deux types de `GrammalecteMessage` existent :
 
 ## Changelog
 
+### Version v1.0.0
+
+- Refactoring
+- Ajout de l'intégration continue
+
 ### Version v0.1.0
 
 - Première version !
