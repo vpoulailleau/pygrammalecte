@@ -23,10 +23,7 @@ python = "^3.7"
 requests = "^2.20.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.0.0"
-pytest-cov = "^2.8.0"
-tox = "^3.14.0"
-tox-travis = "^0.12"
+python-dev-tools = ">=2020.9.4"
 
 [tool.tox]
 legacy_tox_ini = """
