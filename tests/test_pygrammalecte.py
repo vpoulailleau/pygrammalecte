@@ -32,6 +32,7 @@ def assert_messages(messages):
     assert message.start == 17
     assert message.end == 21
     assert message.word == "VHDL"
+    assert message.message == "Mot inconnu : VHDL"
 
     message = next(messages)
     print(message)

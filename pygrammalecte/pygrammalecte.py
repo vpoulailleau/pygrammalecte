@@ -4,7 +4,7 @@ import json
 import subprocess
 import sys
 import tempfile
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Generator, List, Union
 from zipfile import ZipFile
@@ -36,9 +36,13 @@ class GrammalecteSpellingMessage(GrammalecteMessage):
     """Spelling error message."""
 
     word: str
+    message: str = field(init=False)
+
+    def __post_init__(self):
+        self.message = f"Mot inconnu : {self.word}"
 
     def __str__(self):
-        return super().__str__() + f" Mot inconnu : {self.word}"
+        return super().__str__() + " " + self.message
 
     @staticmethod
     def from_dict(line: int, grammalecte_dict: dict) -> "GrammalecteSpellingMessage":
@@ -112,7 +116,7 @@ def grammalecte_file(
 
 
 def _convert_to_messages(
-    grammalecte_json: str
+    grammalecte_json: str,
 ) -> Generator[GrammalecteMessage, None, None]:
     warnings = json.loads(grammalecte_json)
     for warning in warnings["data"]:
