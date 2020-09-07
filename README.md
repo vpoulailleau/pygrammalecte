@@ -68,6 +68,7 @@ Deux types de `GrammalecteMessage` existent :
   - `start` : numéro du caractère de début de l’erreur dans la ligne
   - `end` : numéro du caractère de fin de l’erreur dans la ligne
   - `word` : le mot non reconnu par `Grammalecte`
+  - `message` : message d’erreur
 
 - `GrammalecteGrammarMessage` qui a comme attributs :
   - `line` : numéro de la ligne dans le texte vérifié
@@ -81,6 +82,10 @@ Deux types de `GrammalecteMessage` existent :
   - `type` : type de la règle (`"conj"`…)
 
 ## Changelog
+
+### Version v1.1.0
+
+- Ajout de l'attribut `message` pour `GrammalecteSpellingMessage`
 
 ### Version v1.0.0
 
