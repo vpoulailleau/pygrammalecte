@@ -7,7 +7,7 @@ git rebase
 git status
 
 # version management
-VERSION=`grep "version =" pyproject.toml | sed -e 's/.*= "//' -e 's/"//'`
+VERSION=`egrep "^version =" pyproject.toml | sed -e 's/.*= "//' -e 's/"//'`
 VERSION="v${VERSION}"
 echo "Version to be delivered: ${VERSION}"
 echo -n "Is it OK? (y/n) [y]: "
