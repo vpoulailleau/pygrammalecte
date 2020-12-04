@@ -83,6 +83,10 @@ Deux types de `GrammalecteMessage` existent :
 
 ## Changelog
 
+### Version v1.3.0
+
+- Correction due à un fonctionnement étrange de Grammalecte v1.12.0
+
 ### Version v1.2.0
 
 - Utilisation de Grammalecte v1.12.0
