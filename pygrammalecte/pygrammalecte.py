@@ -118,6 +118,10 @@ def grammalecte_file(
 def _convert_to_messages(
     grammalecte_json: str,
 ) -> Generator[GrammalecteMessage, None, None]:
+    # grammalecte 1.12.0 adds python comments in the JSON!
+    grammalecte_json = "\n".join(
+        line for line in grammalecte_json.splitlines() if not line.startswith("#")
+    )
     warnings = json.loads(grammalecte_json)
     for warning in warnings["data"]:
         lineno = int(warning["iParagraph"])
