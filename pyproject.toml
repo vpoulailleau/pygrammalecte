@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pygrammalecte"
-version = "1.1.0"
+version = "1.2.0"
 description = "Grammalecte, le correcteur grammatical en Python"
 classifiers = [
     "Programming Language :: Python :: 3.7",
