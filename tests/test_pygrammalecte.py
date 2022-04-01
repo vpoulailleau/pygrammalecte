@@ -21,7 +21,7 @@ def assert_messages(messages):
     assert message.line == 1
     assert message.start == 11
     assert message.end == 15
-    assert message.rule == "g1__conj_je__b2_a1_1"
+    assert message.rule == "g2__conj_je__b2_a1_1"
     assert message.message
     assert message.suggestions
 

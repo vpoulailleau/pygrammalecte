@@ -153,7 +153,7 @@ def _run_grammalecte(filepath: str) -> subprocess.CompletedProcess:
 
 def _install_grammalecte():
     """Install grammalecte CLI."""
-    version = "1.12.0"
+    version = "2.1.1"
     tmpdirname = tempfile.mkdtemp(prefix="grammalecte_")
     tmpdirname = Path(tmpdirname)
     tmpdirname.mkdir(exist_ok=True)
