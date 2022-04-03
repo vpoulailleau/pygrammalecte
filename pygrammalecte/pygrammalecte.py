@@ -1,6 +1,7 @@
 """Grammalecte wrapper."""
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -116,13 +117,17 @@ def grammalecte_file(
 
 
 def _convert_to_messages(
-    grammalecte_json: str,
+    grammalecte_json: bytes,
 ) -> Generator[GrammalecteMessage, None, None]:
+    try:
+        grammalecte_json_str = grammalecte_json.decode("utf-8")
+    except UnicodeError:
+        grammalecte_json_str = grammalecte_json.decode("cp1252")  # windows
     # grammalecte 1.12.0 adds python comments in the JSON!
-    grammalecte_json = "\n".join(
-        line for line in grammalecte_json.splitlines() if not line.startswith("#")
+    grammalecte_json_str = "\n".join(
+        line for line in grammalecte_json_str.splitlines() if not line.startswith("#")
     )
-    warnings = json.loads(grammalecte_json)
+    warnings = json.loads(grammalecte_json_str)
     for warning in warnings["data"]:
         lineno = int(warning["iParagraph"])
         messages = []
@@ -136,9 +141,11 @@ def _convert_to_messages(
 
 def _run_grammalecte(filepath: str) -> subprocess.CompletedProcess:
     """Run Grammalecte on a file."""
+    os.environ["PYTHONIOENCODING"] = "utf-8"  # for windows
     return subprocess.run(
         [
-            "grammalecte-cli.py",
+            sys.executable,
+            str(Path(sys.executable).parent / "grammalecte-cli.py"),
             "-f",
             filepath,
             "-off",
@@ -147,7 +154,6 @@ def _run_grammalecte(filepath: str) -> subprocess.CompletedProcess:
             "--only_when_errors",
         ],
         capture_output=True,
-        text=True,
     )
 
 
