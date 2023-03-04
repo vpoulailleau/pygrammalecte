@@ -158,7 +158,7 @@ def _install_grammalecte():
     tmpdirname = Path(tmpdirname)
     tmpdirname.mkdir(exist_ok=True)
     download_request = requests.get(
-        f"https://grammalecte.net/grammalecte/zip/Grammalecte-fr-v{version}.zip"
+        f"https://grammalecte.net/zip/Grammalecte-fr-v{version}.zip"
     )
     download_request.raise_for_status()
     zip_file = tmpdirname / f"Grammalecte-fr-v{version}.zip"
