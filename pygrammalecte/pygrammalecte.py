@@ -83,7 +83,7 @@ class GrammalecteGrammarMessage(GrammalecteMessage):
             url=grammalecte_dict["URL"],
             color=grammalecte_dict["aColor"],
             suggestions=grammalecte_dict["aSuggestions"],
-            message=grammalecte_dict["sMessage"],
+            message=grammalecte_dict["sMessage"].replace("“", "« ").replace("”", " »"),
             rule=grammalecte_dict["sRuleId"],
             type=grammalecte_dict["sType"],
         )
