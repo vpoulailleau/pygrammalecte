@@ -142,10 +142,15 @@ def _convert_to_messages(
 def _run_grammalecte(filepath: str) -> subprocess.CompletedProcess:
     """Run Grammalecte on a file."""
     os.environ["PYTHONIOENCODING"] = "utf-8"  # for windows
+    grammalecte_script = Path(sys.executable).parent / "grammalecte-cli.py"
+    if not grammalecte_script.exists():
+        exc = FileNotFoundError()
+        exc.filename = "grammalecte-cli.py"
+        raise exc
     return subprocess.run(
         [
             sys.executable,
-            str(Path(sys.executable).parent / "grammalecte-cli.py"),
+            str(grammalecte_script),
             "-f",
             filepath,
             "-off",
