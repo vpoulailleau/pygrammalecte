@@ -1,10 +1,13 @@
 """Grammalecte wrapper."""
 
+import io
 import json
 import os
 import subprocess
 import sys
+import sysconfig
 import tempfile
+from contextlib import redirect_stdout
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Generator, List, Union
@@ -99,33 +102,27 @@ def grammalecte_text(text: str) -> Generator[GrammalecteMessage, None, None]:
 
 
 def grammalecte_file(
-    filename: Union[str, Path]
+    filename: Union[str, Path],
 ) -> Generator[GrammalecteMessage, None, None]:
     """Run grammalecte on a file given its path, generate messages."""
     stdout = "[]"
     # TODO check existence of a file
     filename = str(filename)
     try:
-        result = _run_grammalecte(filename)
-        stdout = result.stdout
+        stdout = _run_grammalecte(filename)
     except FileNotFoundError as e:
         if e.filename == "grammalecte-cli.py":
             _install_grammalecte()
-            result = _run_grammalecte(filename)
-            stdout = result.stdout
+            stdout = _run_grammalecte(filename)
     yield from _convert_to_messages(stdout)
 
 
 def _convert_to_messages(
-    grammalecte_json: bytes,
+    grammalecte_json: str,
 ) -> Generator[GrammalecteMessage, None, None]:
-    try:
-        grammalecte_json_str = grammalecte_json.decode("utf-8")
-    except UnicodeError:
-        grammalecte_json_str = grammalecte_json.decode("cp1252")  # windows
     # grammalecte 1.12.0 adds python comments in the JSON!
     grammalecte_json_str = "\n".join(
-        line for line in grammalecte_json_str.splitlines() if not line.startswith("#")
+        line for line in grammalecte_json.splitlines() if not line.startswith("#")
     )
     warnings = json.loads(grammalecte_json_str)
     for warning in warnings["data"]:
@@ -139,7 +136,7 @@ def _convert_to_messages(
             yield message
 
 
-def _run_grammalecte(filepath: str) -> subprocess.CompletedProcess:
+def _run_grammalecte(filepath: str) -> str:
     """Run Grammalecte on a file."""
     os.environ["PYTHONIOENCODING"] = "utf-8"  # for windows
     grammalecte_script = Path(sys.executable).parent / "grammalecte-cli.py"
@@ -147,19 +144,30 @@ def _run_grammalecte(filepath: str) -> subprocess.CompletedProcess:
         exc = FileNotFoundError()
         exc.filename = "grammalecte-cli.py"
         raise exc
-    return subprocess.run(
-        [
-            sys.executable,
-            str(grammalecte_script),
-            "-f",
-            filepath,
-            "-off",
-            "apos",
-            "--json",
-            "--only_when_errors",
-        ],
-        capture_output=True,
-    )
+
+    grammalecte_dir = Path(sysconfig.get_paths()["purelib"]) / "grammalecte"
+    importable_grammalecte_script = grammalecte_dir / "grammalecte_cli.py"
+    importable_grammalecte_script.write_bytes(grammalecte_script.read_bytes())
+
+    old_args = list(sys.argv)
+    sys.argv = [
+        "grammalecte-cli.py",
+        "-f",
+        filepath,
+        "-off",
+        "apos",
+        "--json",
+        "--only_when_errors",
+    ]
+
+    stdout = io.StringIO()
+    with redirect_stdout(stdout):
+        from grammalecte.grammalecte_cli import main
+
+        main()
+
+    sys.argv = old_args
+    return stdout.getvalue()
 
 
 def _install_grammalecte():
