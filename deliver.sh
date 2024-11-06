@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source venv/bin/activate
-
 # configuration management
 git rebase
 git status
@@ -42,7 +40,7 @@ rm -fr htmlcov/
 rm -fr .pytest_cache
 
 # tests
-tox
+uv run tox
 echo -n "Is it OK? (y/n) [y]: "
 read BOOL
 if [ "$BOOL" == "n" ]
@@ -63,8 +61,8 @@ do
 done
 
 # package creation
-poetry build
-until poetry publish
+uv build
+until uv publish
 do
   echo "Try again"
 done
