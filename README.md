@@ -2,8 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/pygrammalecte.svg)](https://pypi.python.org/pypi/pygrammalecte)
 [![PyPI](https://img.shields.io/pypi/l/pygrammalecte.svg)](https://github.com/vpoulailleau/pygrammalecte/blob/master/LICENSE)
-[![Travis](https://api.travis-ci.com/vpoulailleau/pygrammalecte.svg?branch=master)](https://travis-ci.com/vpoulailleau/pygrammalecte)
-[![Code style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![Code style: Ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Downloads](https://pepy.tech/badge/pygrammalecte)](https://pepy.tech/project/pygrammalecte)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/44347ade656fa1e652ae/test_coverage)](https://codeclimate.com/github/vpoulailleau/pygrammalecte/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/44347ade656fa1e652ae/maintainability)](https://codeclimate.com/github/vpoulailleau/pygrammalecte/maintainability)
@@ -16,7 +15,7 @@ Pour être précis, ce projet n’est pas Grammalecte, mais un « wrapper » p
 
 ## Installation
 
-Vous devez utiliser un Python en version supérieure ou égale à 3.7.
+Vous devez utiliser un Python en version supérieure ou égale à 3.9.
 
 L’utilisation d’un environnement virtuel est fortement recommandé.
 
@@ -82,6 +81,11 @@ Deux types de `GrammalecteMessage` existent :
   - `type` : type de la règle (`"conj"`…)
 
 ## Changelog
+
+### Version 1.4.0
+
+- Passage à `uv`
+- Compatibilité Python 3.9 à 3.13
 
 ### Version v1.3.0
 
