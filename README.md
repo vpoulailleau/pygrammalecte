@@ -86,6 +86,7 @@ Deux types de `GrammalecteMessage` existent :
 
 - Passage à `uv`
 - Compatibilité Python 3.9 à 3.13
+- Utilisation de Grammalecte v2.1.1
 
 ### Version v1.3.0
 
