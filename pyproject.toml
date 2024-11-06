@@ -48,9 +48,9 @@ commands =
     uv run python -m pytest -s -vv --cov=pygrammalecte
     uv run coverage xml
     echo 'fix travis bug'
-    sed --in-place -e "s#//home#/home#g" coverage.xml
+    sed --in-place -e 's@//home@/home@' coverage.xml
     echo 'fix codeclimate bug, use relative path'
-    sed --in-place -e "s#/home.*vpoulailleau/pygrammalecte/##g" coverage.xml
+    sed --in-place -e 's@/home.*vpoulailleau/pygrammalecte/@@g' coverage.xml
     cp coverage.xml ../coverage.xml
     cat ../coverage.xml
 """
