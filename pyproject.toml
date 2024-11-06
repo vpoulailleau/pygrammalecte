@@ -37,27 +37,19 @@ isolated_build = True
 envlist = py39, py310, py311, py312, py313
 
 [testenv]
-whitelist_externals =
-    poetry
+allowlist_externals =
+    uv
     echo
     sed
     cat
     cp
 changedir = {toxinidir}/tests
 commands =
-    poetry install -v
-    poetry run pytest -s -vv --cov=pygrammalecte
-    poetry run coverage xml
-    echo 'fix travis bug'
-    sed --in-place -e 's#//home#/home#g' coverage.xml
-    echo 'fix codeclimate bug, use relative path'
-    sed --in-place -e 's#/home.*vpoulailleau/pygrammalecte/##g' coverage.xml
-    cp coverage.xml ../coverage.xml
-    cat ../coverage.xml
+    uv run python -m pytest -s -vv --cov=pygrammalecte
 """
 
 [tool.uv]
-dev-dependencies = ["ruff>=0.7.2", "pytest>=8"]
+dev-dependencies = ["ruff>=0.7.2", "pytest>=8", "pytest-cov >= 6", "tox >= 4"]
 
 [build-system]
 requires = ["hatchling"]
