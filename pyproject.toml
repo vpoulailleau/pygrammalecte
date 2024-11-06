@@ -16,7 +16,7 @@ requires-python = ">=3.9"
 authors = [{ name = "Vincent Poulailleau", email = "vpoulailleau@gmail.com" }]
 keywords = ["grammalecte", "linter", "grammatical", "grammar-checker", "french"]
 license = "BSD-3-Clause"
-dependencies = ["requests>=2.20.0"]
+dependencies = ["requests>=2.20.0", "pip>=23"]
 
 [project.urls]
 "Source code" = "https://github.com/vpoulailleau/pygrammalecte"
@@ -57,7 +57,7 @@ commands =
 """
 
 [tool.uv]
-dev-dependencies = ["ruff>=0.7.2"]
+dev-dependencies = ["ruff>=0.7.2", "pytest>=8"]
 
 [build-system]
 requires = ["hatchling"]
