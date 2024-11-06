@@ -50,14 +50,14 @@ def test_text():
 
 
 def test_file_path(tmp_path):
-    with open(tmp_path / "file.txt", "w", encoding="utf-8") as f:
-        f.write(_content)
+    tmp_file = tmp_path / "file.txt"
+    tmp_file.write_text(_content, encoding="utf-8")
 
-    assert_messages(grammalecte_file(tmp_path / "file.txt"))
+    assert_messages(grammalecte_file(tmp_file))
 
 
 def test_file_path_as_a_string(tmp_path):
-    with open(tmp_path / "file.txt", "w", encoding="utf-8") as f:
-        f.write(_content)
+    tmp_file = tmp_path / "file.txt"
+    tmp_file.write_text(_content, encoding="utf-8")
 
-    assert_messages(grammalecte_file(str(tmp_path / "file.txt")))
+    assert_messages(grammalecte_file(str(tmp_file)))
