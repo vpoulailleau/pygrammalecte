@@ -96,8 +96,7 @@ def grammalecte_text(text: str) -> Generator[GrammalecteMessage, None, None]:
     """Run grammalecte on a string, generate messages."""
     with tempfile.TemporaryDirectory() as tmpdirname:
         tmpfile = Path(tmpdirname) / "file.txt"
-        with open(tmpfile, "w", encoding="utf-8") as f:
-            f.write(text)
+        tmpfile.write_text(text, encoding="utf-8")
         yield from grammalecte_file(tmpfile)
 
 
@@ -105,8 +104,7 @@ def grammalecte_file(
     filename: Union[str, Path],
 ) -> Generator[GrammalecteMessage, None, None]:
     """Run grammalecte on a file given its path, generate messages."""
-    stdout = "[]"
-    # TODO check existence of a file
+    stdout = '{"data":[]}'
     filename = str(filename)
     try:
         stdout = _run_grammalecte(filename)
@@ -138,20 +136,18 @@ def _convert_to_messages(
 
 def _run_grammalecte(filepath: str) -> str:
     """Run Grammalecte on a file."""
-    os.environ["PYTHONIOENCODING"] = "utf-8"  # for windows
-    grammalecte_script = Path(sys.executable).parent / "grammalecte-cli.py"
+    grammalecte_script = Path(sysconfig.get_paths()["scripts"]) / "grammalecte-cli.py"
     if not grammalecte_script.exists():
         exc = FileNotFoundError()
         exc.filename = "grammalecte-cli.py"
         raise exc
 
-    grammalecte_dir = Path(sysconfig.get_paths()["purelib"]) / "grammalecte"
-    importable_grammalecte_script = grammalecte_dir / "grammalecte_cli.py"
-    importable_grammalecte_script.write_bytes(grammalecte_script.read_bytes())
+    # can be done only here, after the installation is properly done
+    from grammalecte.grammalecte_cli import main
 
     old_args = list(sys.argv)
     sys.argv = [
-        "grammalecte-cli.py",
+        "grammalecte_cli.py",
         "-f",
         filepath,
         "-off",
@@ -160,10 +156,7 @@ def _run_grammalecte(filepath: str) -> str:
         "--only_when_errors",
     ]
 
-    stdout = io.StringIO()
-    with redirect_stdout(stdout):
-        from grammalecte.grammalecte_cli import main
-
+    with redirect_stdout(io.StringIO()) as stdout:
         main()
 
     sys.argv = old_args
@@ -193,3 +186,14 @@ def _install_grammalecte():
             str(tmpdirname / f"Grammalecte-fr-v{version}"),
         ]
     )
+
+    grammalecte_script = Path(sysconfig.get_paths()["scripts"]) / "grammalecte-cli.py"
+    grammalecte_dir = Path(sysconfig.get_paths()["purelib"]) / "grammalecte"
+
+    importable_grammalecte_script = grammalecte_dir / "grammalecte_cli.py"
+    importable_grammalecte_script.write_bytes(grammalecte_script.read_bytes())
+
+    echo_file = grammalecte_dir / "graphspell" / "echo.py"
+    content = echo_file.read_text(encoding="utf-8")
+    content = content.replace("file=file, ", "")
+    echo_file.write_text(content, encoding="utf-8")
