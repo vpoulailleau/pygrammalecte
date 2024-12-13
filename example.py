@@ -7,4 +7,5 @@ Le VHDL est est compliquer.
 """
 
 for message in grammalecte_text(texte_bidon):
+    print(message.message.encode("utf-8"))
     print(message)
