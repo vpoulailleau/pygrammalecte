@@ -82,6 +82,10 @@ Deux types de `GrammalecteMessage` existent :
 
 ## Changelog
 
+### Version 1.5.0
+
+- Amélioration du support de Windows
+
 ### Version 1.4.0
 
 - Passage à `uv`
