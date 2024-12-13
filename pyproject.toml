@@ -1,6 +1,6 @@
 [project]
 name = "pygrammalecte"
-version = "1.4.0"
+version = "1.5.0"
 description = "Grammalecte, le correcteur grammatical en Python"
 readme = "README.md"
 classifiers = [
