@@ -150,10 +150,10 @@ def _run_grammalecte(filepath: str) -> str:
         "grammalecte_cli.py",
         "-f",
         filepath,
-        "-off",
-        "apos",
         "--json",
         "--only_when_errors",
+        "--opt_off",
+        "apos",
     ]
 
     with redirect_stdout(io.StringIO()) as stdout:
