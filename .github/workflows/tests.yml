@@ -29,7 +29,9 @@ jobs:
         run: uv run python example.py
 
       - name: Run pip freeze
+        if: always()
         run: uv pip freeze
 
       - name: Run tests
+        if: always()
         run: uv run pytest
