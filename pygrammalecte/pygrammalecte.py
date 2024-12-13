@@ -7,13 +7,18 @@ import subprocess
 import sys
 import sysconfig
 import tempfile
-from contextlib import redirect_stdout
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Generator, List, Union
 from zipfile import ZipFile
 
 import requests
+
+
+def safe_string(text: str) -> str:
+    if os.name == "nt":
+        return text.encode("cp1252", errors="replace").decode("cp1252")
+    return text
 
 
 @dataclass
@@ -55,7 +60,7 @@ class GrammalecteSpellingMessage(GrammalecteMessage):
             line=line,
             start=int(grammalecte_dict["nStart"]),
             end=int(grammalecte_dict["nEnd"]),
-            word=grammalecte_dict["sValue"],
+            word=safe_string(grammalecte_dict["sValue"]),
         )
 
 
@@ -85,8 +90,13 @@ class GrammalecteGrammarMessage(GrammalecteMessage):
             end=int(grammalecte_dict["nEnd"]),
             url=grammalecte_dict["URL"],
             color=grammalecte_dict["aColor"],
-            suggestions=grammalecte_dict["aSuggestions"],
-            message=grammalecte_dict["sMessage"].replace("“", "« ").replace("”", " »"),
+            suggestions=[
+                safe_string(suggestion)
+                for suggestion in grammalecte_dict["aSuggestions"]
+            ],
+            message=safe_string(
+                grammalecte_dict["sMessage"].replace("“", "« ").replace("”", " »")
+            ),
             rule=grammalecte_dict["sRuleId"],
             type=grammalecte_dict["sType"],
         )
