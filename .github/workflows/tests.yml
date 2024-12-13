@@ -25,5 +25,11 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
 
+      - name: Run example
+        run: uv run python example.py
+
+      - name: Run pip freeze
+        run: uv pip freeze
+
       - name: Run tests
         run: uv run pytest
