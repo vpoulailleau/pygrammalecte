@@ -143,24 +143,28 @@ def _run_grammalecte(filepath: str) -> str:
         raise exc
 
     # can be done only here, after the installation is properly done
-    from grammalecte.grammalecte_cli import main
+    from grammalecte.grammalecte_cli import generateParagraphFromFile
+    import grammalecte
 
-    old_args = list(sys.argv)
-    sys.argv = [
-        "grammalecte_cli.py",
-        "-f",
-        filepath,
-        "--json",
-        "--only_when_errors",
-        "--opt_off",
-        "apos",
-    ]
-
-    with redirect_stdout(io.StringIO()) as stdout:
-        main()
-
-    sys.argv = old_args
-    return stdout.getvalue()
+    # inspired from grammalecte-cli.py, keep the bad naming convention
+    # to ease further maintainance
+    warnings_list = []
+    oGrammarChecker = grammalecte.GrammarChecker("fr")
+    oGrammarChecker.gce.setOptions({"html": True, "latex": True, "apos": False})
+    for i, sText, lLineSet in generateParagraphFromFile(filepath, False):
+        sText = oGrammarChecker.getParagraphErrorsAsJSON(
+            i,
+            sText,
+            bContext=False,
+            bEmptyIfNoErrors=True,
+            bSpellSugg=False,
+            bReturnText=False,
+            lLineSet=lLineSet,
+        )
+        warnings_list.append(sText)
+    warnings = ",\n".join(warnings_list)
+    result = f'{{"data": [\n{warnings}\n]}}'
+    return result
 
 
 def _install_grammalecte():
